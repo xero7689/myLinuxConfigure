@@ -1,48 +1,138 @@
-syntax enable
-filetype indent plugin on
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set modeline
-set tabstop=8
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-set ruler
-set number
-set cursorline
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-airline/vim-airline'
+
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'mattn/emmet-vim'
+
+" ColorScheme
+Plugin 'franbach/miramare'
+Plugin 'tlhr/anderson.vim'
+Plugin 'pgavlin/pulumi.vim'
+
+" Syntax Highlight
+Plugin 'sheerun/vim-polyglot'
+
+" Lint Engine
+Plugin 'dense-analysis/ale'
+
+" Plugin for Vue.js
+Plugin 'posva/vim-vue'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" Basic Programming Settings
+syntax on
+set nu
+set encoding=utf-8
+
+" CTags Settings
+set tags+=./tags,tags
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>:TagbarOpen<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" Theme Settings
+" Miramare
+set termguicolors
+"let g:miramare_enable_italic = 1
+"let g:miramare_disable_italic_comment = 1
+"colorscheme miramare
+let g:airline_theme = 'miramare'
+
+" Color Scheme
+" colorscheme anderson
+colorscheme pulumi
+
+" Window Split
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Code Folding
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
+" Tabe Navigation
+nnoremap <S-Left> :tabprevious<CR>
+nnoremap <S-Right> :tabnext<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+"
+set autoindent
+set fileformat=unix
 set hlsearch
-set enc=utf8
 
-"Code Folding
-"set foldmethod=indent
-set foldmethod=syntax
-set nofoldenable
 
-"Background
-set background=dark
+" Python PEP8
+au BufNewFile,BufRead *.py
+    \  set tabstop=4
+    \ | set softtabstop=4
+    \ | set shiftwidth=4
+    \ | set textwidth=79
+    \ | set expandtab
 
-"Distinguished
-colorscheme distinguished
+" Full Stack
+"au BufNewFile,BufRead *.js, *.html, *.css
+au Filetype html
+    \  set tabstop=2
+    \ | set softtabstop=2
+    \ | set shiftwidth=2
+    \ | set expandtab
 
-"Solarized
-"let g:solarized_termcolors=256
-"colorscheme solarized
+au Filetype htmldjango
+    \  set tabstop=2
+    \ | set softtabstop=2
+    \ | set shiftwidth=2
+    \ | set expandtab
 
-"Molokai
-"let g:molokai_original = 1
-"colorscheme molokai
+au Filetype javascript
+    \  set tabstop=2
+    \ | set softtabstop=2
+    \ | set shiftwidth=2
+    \ | set expandtab
 
-"Phd
-"colorscheme phd
+au Filetype css
+    \  set tabstop=2
+    \ | set softtabstop=2
+    \ | set shiftwidth=2
+    \ | set expandtab
 
-"Git commit
-autocmd Filetype gitcommit setlocal spell textwidth=72
+" YCM - Configuration
+" let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
 
-"Pathogen
-runtime bundle/pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+" Emmet HTML Plugin
+let g:user_emmet_leader_key=','
 
-"Powerline
-let g:Powerline_colorscheme='solarized256'
-
-"NERDTree
-nmap <LEADER>e :NERDTreeToggle
+" Tag Bar
+autocmd FileType python,javascript TagbarOpen
+nmap <F8> :TagbarToggle<CR>
