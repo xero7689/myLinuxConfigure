@@ -27,6 +27,9 @@ Plugin 'pgavlin/pulumi.vim'
 " Syntax Highlight
 Plugin 'sheerun/vim-polyglot'
 
+" Syntatic
+Plugin 'scrooloose/syntastic'
+
 " Lint Engine
 Plugin 'dense-analysis/ale'
 
@@ -55,6 +58,12 @@ set encoding=utf-8
 
 " CTags Settings
 set tags+=./tags,tags
+
+" CTags for MBS Project
+" set tags+=/Users/peterlee/code/mbs/mbs_ctags/django_admin_tags
+" set tags+=/Users/peterlee/code/mbs/mbs_ctags/flask_apihub_tags
+" set tags+=/Users/peterlee/code/mbs/mbs_ctags/rpc_mbs_tags
+
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>:TagbarOpen<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
@@ -68,7 +77,8 @@ let g:airline_theme = 'miramare'
 
 " Color Scheme
 " colorscheme anderson
-colorscheme pulumi
+" colorscheme pulumi
+colorscheme gruvbox
 
 " Window Split
 nnoremap <C-J> <C-W><C-J>
@@ -127,12 +137,35 @@ au Filetype css
     \ | set shiftwidth=2
     \ | set expandtab
 
+au Filetype vue
+    \  set tabstop=2
+    \ | set softtabstop=2
+    \ | set shiftwidth=2
+    \ | set expandtab
+
 " YCM - Configuration
-" let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
 
 " Emmet HTML Plugin
 let g:user_emmet_leader_key=','
 
+" Posva/vim-vue
+autocmd FileType vue syntax sync fromstart
+
 " Tag Bar
 autocmd FileType python,javascript TagbarOpen
 nmap <F8> :TagbarToggle<CR>
+
+" Gruvbox
+let g:gruvbox_bold=1
+
+" Syntatic Settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']

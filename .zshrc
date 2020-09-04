@@ -10,6 +10,8 @@ export ZSH="/Users/peterlee/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
 ZSH_THEME="agnoster-custom"
+#ZSH_THEME="gruvbox"
+#SOLARIZED_THEME="dark"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -107,8 +109,24 @@ alias cdcms="cd /Users/peterlee/code/cloud-cms"
 alias pipenv="python3 -m pipenv"
 alias autopep8="python -m autopep8"
 alias unrar="/usr/local/Cellar/unrar/5.9.2/bin/unrar"
-alias cdmbs="/Users/peterlee/code/mbs"
+alias cdmbs="cd /Users/peterlee/code/mbs"
+alias ack="ack --ignore-file=is:tags --ignore-file=match:pb2.py"
+alias echopath='echo $PATH | tr ":"  "\n"'
+alias gitlg="git log --oneline --all --graph"
+alias hgrep="history | grep "
+alias ackpysrc='ack --type=python --ignore-dir=tests'
+alias tsc="/Users/peterlee/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/tsserver/lib/node_modules/typescript/bin/tsc"
 
 # Go Settings
-export GOPATH=$HOME/go
-export PATH="$GOPATH/bin:$PATH"
+export GOPATH=$HOME/go/bin
+export NPM_GLOBAL=$HOME/.npm_global/bin
+export MYSQL_CLIENT_PATH=/usr/local/opt/mysql-client/bin
+
+export PATH="$GOPATH:$PATH"
+export PATH="$NPM_GLOBAL:$PATH"
+export PATH="$MYSQL_CLIENT_PATH:$PATH"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
